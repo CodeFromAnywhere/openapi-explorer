@@ -1,4 +1,4 @@
-This is a next project showcasing the [openapi-for-humans OpenAPI Explorer](https://github.com/CodeFromAnywhere/opeanpi-for-humans-react).
+This is a next project showcasing the [openapi-for-humans OpenAPI Explorer](https://github.com/CodeFromAnywhere/openapi-for-humans-react).
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
