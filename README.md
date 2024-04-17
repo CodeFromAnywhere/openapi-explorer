@@ -1,5 +1,13 @@
 This is a next project showcasing the [openapi-for-humans OpenAPI Explorer](https://github.com/CodeFromAnywhere/openapi-for-humans-react).
 
+Goals:
+
+- Make URL contain state
+- Make operations of predefined openapis statically generated
+- A friendly UI to use multiple products defined by OpenAPIs without looking to technical
+- Ability to use crawl agents that can build action-paths based on the openapis and a query.
+- Ability to use this repo as a template so people can deploy a frontend for their own openapi with customised settings, and easily extend it in any way.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
