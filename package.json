@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "from-anywhere": "*",
     "js-yaml": "^4.1.0",
     "next": "14.2.1",
     "openapi-for-humans-react": "^0.0.5",

@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { OperationPage } from "openapi-for-humans-react";
-import { fetchOpenapi } from "./fetchOpenapi";
+import { fetchOpenapi } from "from-anywhere";
 
 const tryParseUrlFromId = (openapiId: string | undefined) => {
   if (!openapiId) {
