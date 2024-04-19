@@ -143,21 +143,33 @@ TODO:
 
 ✅ Added nice readme with a markdown renderer onto the site.
 
-Ensure the navigation has the same way of rendering for each path. Now I can highlight the active one.
+✅ Ensure the navigation has the same way of rendering for each path. Now I can highlight the active one.
 
-Add the operations into the navigation and link to the right operation page.
+✅ Add the operations into the navigation and link to the right operation page.
 
-If there's just one openapi, load the overview of that one by default from the homepage. No redirect!
+✅ Allow rendering `summary` if available.
 
-Allow rendering `summary` if available.
+✅ Only show the operations of the active openapi. The rest can be minimised at the bottom.
 
-Allow sorting on tags similar to `readme.com`
+# Search
 
-Only show the operations of the active openapi. The rest can be minimised at the bottom.
+✅ Make current header sticky on top
+
+Ensure we auto-scroll to the currently active operation.
+
+Implement a searchbar in the sticky header as well.
+
+If I can use `typeof window !== "undefined" && window.location.search` from server, implement search in this way. No `setState` as it's a URL modification hook.
+
+When searching, the results should include all available ids and summaries and a different view should be rendered.
+
+When not searching, allow sorting on tags similar to `readme.com`
 
 Confirm it looks good now als for multiple openapi nav.
 
-If I can use `typeof window !== "undefined" && window.location.search` from server, implement search in this way. No `setState` as it's a URL modification hook.
+# Single OpenAPI homepage
+
+If there's just one openapi, load the overview of that one by default from the homepage. No redirect!
 
 Make a variation on the navigation that only shows the current openapi and a link to the homepage. Let's make `openapiforhumans.com/klippa` the place to have a single openapi without menu of others.
 
@@ -177,38 +189,35 @@ Also, we need to track which valid openapis people fill in. We can collect that 
 
 🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
 
-# Posting a form
+# Search API
 
-- ✅ Take some `actionschema-web` stuff that was similar and make this opensource. If treeshaking works, better just make one huge package `cfa-react` or so or general purpose utils, then some more niche packages.
-- `schema-util` can become an open-source package `oai-schema-tools` or so for both openapi and json-schema conventions. In there, let's refer to other people having made stuff. Also document my choices and learnings, and tips&tricks there. Look for other people making utils for this that is well-maintained.
-- Resolve body schema in `getOpenapiOperations.ts`. Get it fully resolved from the openapi. Do some research to find this function.
-- Now render the form in the standard way without the variables-string stuff.
-- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted
-- Provide required header info to the form in the right way and add this as additional (maybe prefilled) values to the form.
-- Secrets such as auth can be `password inputs` with toggles to view and copy.
+- The same query-search should be doable by API
+- There needs to be other endpoints to search in a more semantic way.
+- Ultimately, a scalable API searching through thousands of apis in a smart hierarchical way, would be what I really need.
 
-# `openapi-for-humans-next`
+# Proxy API
 
-- Implement `OperationPage` with just the form.
-- Ensure it's fully cached and has good indexation.
+Once we can reliably have an agent decide which APIs are useful for an agent, it should be able to take the set of actions and turn it into an `OpenAPIProxy`.
+
+Also, we need an API to host a proxy on a serverless endpoint with a single auth in front of the auths of the original apis. This can be done with the Vercel API, as long as we can set `.env` variables.
+
+# Test proxies with OpenGPTs and/or OpenAIs API
+
+https://github.com/langchain-ai/opengpts and OpenAIs API should allow me to easily build an agent with a new serverless OpenAPI Proxy, and then test the agent.
+
+The proxy creator is already an amazing idea, but when will it be useful and reliable? We need to test agents for that.
 
 # Next.js Installation Problem
 
 If we have `^0.0.5` or anything in our own packages, theres a big chance the package doesn't get updated to the latest version. Maybe this is `package-lock.json` at work? In this case, maybe there should be a predeploy that refreshes all packages to the latest version. This way we can be certain about the version number.
-
-# `openapi-for-humans-next`
-
-- Add correct metadata.
-- Create a sitemap so these pages are indexable.
-- The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
-- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
-- Add settings similar to `actionschema-web` for auth etc.
 
 # Validate the usefulness of this thing
 
 For each `explorer.actionschema.com/xyz` page, contact the company and try to get a meeting with them.
 
 Talk with multiple SaaS providers with an API about the usefulness of multiple GTM ideas.
+
+Explore LangChain, Robocorp and the tooling they made and see where it can be complemented.
 
 ## GTM ideas
 
@@ -220,17 +229,14 @@ Talk with multiple SaaS providers with an API about the usefulness of multiple G
 - Provide paid search-access to Code-gen AIs
 - Webapp for openai to more easily find actions for agents (Milan)
 
-# Serper Improvements
+# Metadata
 
-- Add information about docs, signup, pricing, etc in the openapi spec and fill it in nicely for serper.dev
-- Add information on how to auth (for now, require the user to make their token in serper.dev and pay there)
-- Other APIs to proxy: Induced, Scrapingbee, OpenAI, PlayHT, Deepgram, Fly.io, etc etc. Contact every API owner by applying to a position with open email about OpenAPIs. Then go into interview and show them the value I created already.
-- ❌ Also deploy the SDK based on my openapi.
-- ❌ Also deploy a link to docs in this website. Can be using that docs maker.
-- ❌ Turn this website into a playground: For every endpoint, show a form, and documentation.
-- The above would be distraction. **Focus on reducing time required to have quality api proxy**.
-
-<!-- The above is a Proof of concept and is valuable for any service. -->
+- Ensure it's fully cached and has good indexation.
+- Add correct metadata.
+- Create a sitemap so these pages are indexable.
+- The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
+- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
+- Add settings similar to `actionschema-web` for auth etc.
 
 # LLM Search & Generating ActionSchemas
 

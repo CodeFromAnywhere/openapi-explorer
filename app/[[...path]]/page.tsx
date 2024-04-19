@@ -13,7 +13,10 @@ import { generateStaticParamsForOperations } from "../generateStaticParamsForOpe
 import { Homepage } from "./Homepage";
 import { NextOperationPage } from "./NextOperationPage";
 
-type HomepageProps = { params?: { path: PathParam }; searchParams: {} };
+type HomepageProps = {
+  params?: { path: PathParam };
+  searchParams: { query?: string };
+};
 
 /**
  * See: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
@@ -25,7 +28,7 @@ export async function generateMetadata(
   const { params, searchParams, ...rest } = props;
   const openapiId = params?.path?.[0];
   const operationId = params?.path?.[1];
-  console.log({ rest, searchParams, openapiId, operationId });
+  //console.log({ rest, searchParams, openapiId, operationId });
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
