@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 import "openapi-for-humans-react/css.css";
 import { selectedIds } from "./selectedIds";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "OpenAPI for Humans",
@@ -29,6 +30,7 @@ export default async function RootLayout({
       <body className={inter.className + " flex flex-row"}>
         <nav className="w-80 h-screen border-gray-500 border-r-2">
           <OpenapiExplorer
+            LinkComponent={Link}
             onRefreshOpenapis={(openapiIds) => {
               // should refresh these api(s) - which is likely 1 or all
             }}
