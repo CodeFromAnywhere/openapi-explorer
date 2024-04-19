@@ -155,17 +155,17 @@ TODO:
 
 ✅ Make current header sticky on top
 
-Ensure we auto-scroll to the currently active operation.
+✅ Ensure we auto-scroll to the currently active operation.
 
-Implement a searchbar in the sticky header as well.
+✅ Implement a searchbar in the sticky header as well.
 
-If I can use `typeof window !== "undefined" && window.location.search` from server, implement search in this way. No `setState` as it's a URL modification hook.
+🤔 Rather than doing direct search, let's focus on search via an API. 🐴
 
-When searching, the results should include all available ids and summaries and a different view should be rendered.
+🤔 In `layout.tsx` we don't have access to the `searchParams`.
 
-When not searching, allow sorting on tags similar to `readme.com`
+Implement the search form to navigate to `/search/{endpoint}/{query}`
 
-Confirm it looks good now als for multiple openapi nav.
+Implement `search/regular/{query}` to actually call some backend function that applies some sort of LLM search on the OpenAPIs.
 
 # Single OpenAPI homepage
 
