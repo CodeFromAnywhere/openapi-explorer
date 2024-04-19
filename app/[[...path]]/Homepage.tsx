@@ -1,8 +1,11 @@
 import { readFile } from "fs/promises";
+import path from "path";
 import Markdown from "react-markdown";
 
 export const Homepage = async () => {
-  const readme = await readFile("README.md", "utf8");
+  const readmePath = path.resolve(".", "README.md");
+
+  const readme = await readFile(readmePath, "utf8");
 
   return (
     <main className="min-h-screen p-24">
