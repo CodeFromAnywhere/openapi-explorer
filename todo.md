@@ -141,6 +141,8 @@ TODO:
 
 # Optimise single openapi site
 
+✅ Added nice readme with a markdown renderer onto the site.
+
 Ensure the navigation has the same way of rendering for each path. Now I can highlight the active one.
 
 Add the operations into the navigation and link to the right operation page.
