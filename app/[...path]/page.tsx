@@ -7,7 +7,8 @@ import {
 import { OpenapiOperationObject, fetchOpenapi, notEmpty } from "from-anywhere";
 import { Metadata, ResolvingMetadata } from "next";
 import { tryParseUrlFromId } from "./tryParseUrlFromId";
-import { openapiUrlObject } from "./openapiUrlObject";
+import { openapiUrlObject } from "../openapiUrlObject";
+import { selectedIds } from "../selectedIds";
 
 type HomepageProps = { params: { path: PathParam }; searchParams: {} };
 
@@ -55,7 +56,7 @@ type PathParam = [string, string | undefined];
  * https://nextjs.org/docs/app/api-reference/functions/generate-static-params#generate-only-a-subset-of-params
  */
 export const generateStaticParams = async () => {
-  const openapis = await getOpenapisOperations(openapiUrlObject);
+  const openapis = await getOpenapisOperations(openapiUrlObject, selectedIds);
   const params = openapis.map((item) => {
     const openapiParams: {
       path: PathParam;
@@ -96,13 +97,16 @@ const Homepage = async (props: HomepageProps) => {
   const exampleIndex = undefined;
   const runId = undefined;
 
+  const operationDetails = operationId
+    ? openapiDetails?.operations?.find((x) => x.id === operationId)
+    : undefined;
+
   return (
     <div>
       {openapiDetails ? (
-        operationId ? (
+        operationDetails ? (
           <OperationPage
-            openapi={openapiDetails}
-            operationId={operationId}
+            operationDetails={operationDetails}
             state={{ exampleIndex, runId }}
             setState={(state) => {}}
           />

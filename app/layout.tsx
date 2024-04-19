@@ -5,11 +5,12 @@ import {
   OpenapiExplorer,
   getOpenapisOperations,
 } from "openapi-for-humans-react";
-import { openapiUrlObject } from "./[...path]/openapiUrlObject";
+import { openapiUrlObject } from "./openapiUrlObject";
 
 const inter = Inter({ subsets: ["latin"] });
 
 import "openapi-for-humans-react/css.css";
+import { selectedIds } from "./selectedIds";
 
 export const metadata: Metadata = {
   title: "OpenAPI for Humans",
@@ -21,9 +22,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const [search, setSearch] = useState("");
-
-  const openapis = await getOpenapisOperations(openapiUrlObject);
+  const openapis = await getOpenapisOperations(openapiUrlObject, selectedIds);
 
   return (
     <html lang="en">
