@@ -163,20 +163,22 @@ TODO:
 
 🤔 In `layout.tsx` we don't have access to the `searchParams`.
 
-Implement the search form to navigate to `/search/{endpoint}/{query}`
-
-Implement `search/regular/{query}` to actually call some backend function that applies some sort of LLM search on the OpenAPIs.
-
-Ultimately, a scalable API searching through thousands of apis in a smart hierarchical way, would be what I really need.
-
 # Metadata
 
-- Ensure it's fully cached and has good indexation.
+- ✅ Ensure it's fully cached and has good indexation.
 - Add correct metadata.
 - Create a sitemap so these pages are indexable.
 - The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
 - Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
 - Add settings similar to `actionschema-web` for auth etc.
+
+# Backend search
+
+Implement the search form to navigate to `/search/{endpoint}/{query}`
+
+Implement `search/regular/{query}` to actually call some backend function that applies some sort of LLM search on the OpenAPIs.
+
+Ultimately, a scalable API searching through thousands of APIs in a smart hierarchical way, would be what I really need.
 
 # Single OpenAPI homepage
 

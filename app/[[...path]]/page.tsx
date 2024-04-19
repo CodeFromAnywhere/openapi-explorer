@@ -25,18 +25,24 @@ export async function generateMetadata(
   props: HomepageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { params, searchParams, ...rest } = props;
+  const { params, searchParams } = props;
   const openapiId = params?.path?.[0];
   const operationId = params?.path?.[1];
   //console.log({ rest, searchParams, openapiId, operationId });
   // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
+  // const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: "JOEPIE",
-    openGraph: {
-      images: ["/some-specific-page-image.jpg", ...previousImages],
-    },
+    title: operationId
+      ? `${openapiId} - ${operationId}`
+      : openapiId
+      ? openapiId
+      : "OpenAPI for Humans",
+    description:
+      "OpenAPI for Humans combines multiple OpenAPIs in a fast, organized, and searchable interface.",
+    // openGraph: {
+    //   images: ["/some-specific-page-image.jpg", ...previousImages],
+    // },
   };
 }
 
