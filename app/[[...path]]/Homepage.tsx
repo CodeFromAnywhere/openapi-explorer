@@ -1,11 +1,11 @@
 import { readFile } from "fs/promises";
 import Markdown from "react-markdown";
 
-export default async function Home() {
+export const Homepage = async () => {
   const readme = await readFile("README.md", "utf8");
 
   return (
-    <main className="flex min-h-screen flex-col p-24">
+    <main className="min-h-screen p-24">
       <Markdown
         components={{
           h1: (props) => <h1 className="text-3xl py-8">{props.children}</h1>,
@@ -26,4 +26,4 @@ export default async function Home() {
       </Markdown>
     </main>
   );
-}
+};

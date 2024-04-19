@@ -1,4 +1,4 @@
-export const tryParseUrlFromId = (openapiId: string) => {
+export const tryParseUrlFromId = (openapiId: string | undefined) => {
   if (!openapiId) {
     return undefined;
   }
