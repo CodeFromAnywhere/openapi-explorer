@@ -167,6 +167,17 @@ Implement the search form to navigate to `/search/{endpoint}/{query}`
 
 Implement `search/regular/{query}` to actually call some backend function that applies some sort of LLM search on the OpenAPIs.
 
+Ultimately, a scalable API searching through thousands of apis in a smart hierarchical way, would be what I really need.
+
+# Metadata
+
+- Ensure it's fully cached and has good indexation.
+- Add correct metadata.
+- Create a sitemap so these pages are indexable.
+- The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
+- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
+- Add settings similar to `actionschema-web` for auth etc.
+
 # Single OpenAPI homepage
 
 If there's just one openapi, load the overview of that one by default from the homepage. No redirect!
@@ -188,12 +199,6 @@ Depending on how easy it's to use `localStorage` maybe a better solution is to c
 Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
 
 🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
-
-# Search API
-
-- The same query-search should be doable by API
-- There needs to be other endpoints to search in a more semantic way.
-- Ultimately, a scalable API searching through thousands of apis in a smart hierarchical way, would be what I really need.
 
 # Proxy API
 
@@ -228,15 +233,6 @@ Explore LangChain, Robocorp and the tooling they made and see where it can be co
 - Provide API playground website to SaaS
 - Provide paid search-access to Code-gen AIs
 - Webapp for openai to more easily find actions for agents (Milan)
-
-# Metadata
-
-- Ensure it's fully cached and has good indexation.
-- Add correct metadata.
-- Create a sitemap so these pages are indexable.
-- The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
-- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
-- Add settings similar to `actionschema-web` for auth etc.
 
 # LLM Search & Generating ActionSchemas
 
