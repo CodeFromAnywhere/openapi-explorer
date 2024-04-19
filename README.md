@@ -1,4 +1,4 @@
-This is a next project showcasing the [openapi-for-humans OpenAPI Explorer](https://github.com/CodeFromAnywhere/openapi-for-humans-react).
+[**OpenAPI for Humans**](https://github.com/CodeFromAnywhere/openapi-for-humans-next) combines multiple OpenAPIs in a fast, organized, and searchable interface.
 
 ## Goals
 
@@ -31,3 +31,5 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. We deployed this using [Vercel Platform](https://vercel.com) and so can you.
+
+This is a next project showcasing the [openapi-for-humans OpenAPI Explorer](https://github.com/CodeFromAnywhere/openapi-for-humans-react).
