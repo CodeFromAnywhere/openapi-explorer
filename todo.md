@@ -169,11 +169,12 @@ TODO:
 - ✅ Add correct metadata (title + basic description)
 - ✅ Add description being from the operation description
 - ✅ Add image from openapi info logo url for serper.dev (and add it to the spec)
-- Create a sitemap so these pages are indexable.
 - ✅ The hardcoded openapis will be cached in HTML at buildtime.
-- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
+- ❌ Create a sitemap so these pages are indexable.
 
 # Custom OpenAPI Support
+
+`AddCustomApi` client component.
 
 This form should simply check if it's found and if it's correct.
 
@@ -185,7 +186,9 @@ Depending on how easy it's to use `localStorage` maybe a better solution is to c
 
 Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
 
-🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
+# Refresh
+
+Allow for refetching certain OpenAPI paths via next endpoint to regenerate it
 
 # Backend search
 
@@ -202,6 +205,8 @@ If there's just one openapi, load the overview of that one by default from the h
 Make a variation on the navigation that only shows the current openapi and a link to the homepage. Let's make `openapiforhumans.com/klippa` the place to have a single openapi without menu of others.
 
 It'd be great to also have some customisation like logos, coloring, etc. Let's do this custom for Klippa now, and come up with how to do this automatically at build-time.
+
+🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
 
 # Proxy API
 
