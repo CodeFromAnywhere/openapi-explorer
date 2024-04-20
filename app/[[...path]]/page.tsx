@@ -27,14 +27,34 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { params, searchParams } = props;
   const openapiId = params?.path?.[0];
+  const openapiUrl = getOpenapiUrl(openapiId);
+  const defaultMetadata = {
+    title: "OpenAPI for Humans",
+    description:
+      "OpenAPI for Humans combines multiple OpenAPIs in a fast, organized, and searchable interface.",
+  };
+  if (!openapiId || !openapiUrl) {
+    return defaultMetadata;
+  }
 
-  const description =
-    "OpenAPI for Humans combines multiple OpenAPIs in a fast, organized, and searchable interface.";
-  if (!openapiId) {
-    return { title: "OpenAPI for Humans", description };
+  const openapiDetails =
+    openapiId && openapiUrl
+      ? await getOpenapiOperations(openapiId, openapiUrl)
+      : undefined;
+  if (!openapiDetails) {
+    return defaultMetadata;
   }
 
   const operationId = params?.path?.[1];
+
+  const operation = operationId
+    ? openapiDetails.operations.find((x) => x.id === operationId)?.operation
+    : undefined;
+
+  const description = operation
+    ? operation.description || operation.summary
+    : openapiDetails.document.info.description;
+
   return {
     title: operationId ? `${openapiId} - ${operationId}` : openapiId,
     description,
@@ -58,13 +78,14 @@ type PathParam = [string | undefined, string | undefined];
  */
 export const generateStaticParams = generateStaticParamsForOperations;
 
+const getOpenapiUrl = (openapiId: string | undefined) =>
+  openapiId && Object.keys(openapiUrlObject).includes(openapiId)
+    ? openapiUrlObject[openapiId as keyof typeof openapiUrlObject]
+    : tryParseUrlFromId(openapiId);
 const Pathpage = async (props: HomepageProps) => {
   const openapiId = props?.params?.path?.[0];
   const operationId = props?.params?.path?.[1];
-  const openapiUrl =
-    openapiId && Object.keys(openapiUrlObject).includes(openapiId)
-      ? openapiUrlObject[openapiId as keyof typeof openapiUrlObject]
-      : tryParseUrlFromId(openapiId);
+  const openapiUrl = getOpenapiUrl(openapiId);
 
   if (!openapiId || !openapiUrl) {
     return <Homepage />;

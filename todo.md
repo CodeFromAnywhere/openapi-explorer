@@ -166,11 +166,27 @@ TODO:
 # Metadata
 
 - ✅ Ensure it's fully cached and has good indexation.
-- Add correct metadata.
+- ✅ Add correct metadata (title + basic description)
+- ✅ Add description being from the operation description
+- ✅ Add image from openapi info logo url for serper.dev (and add it to the spec)
+- Proxy All OpenAPIs I have now
 - Create a sitemap so these pages are indexable.
-- The hardcoded openapis will be cached in HTML at buildtime. What about the dynamic ones? They're probably good too as nextjs takes care of it.
+- The hardcoded openapis will be cached in HTML at buildtime.
 - Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
-- Add settings similar to `actionschema-web` for auth etc.
+
+# Custom OpenAPI Support
+
+This form should simply check if it's found and if it's correct.
+
+If it is, it should navigate to `/{urlEncoded(url)}`
+
+If possible, we can also add this one to `localStorage` from here so it will stay in the menu for a user, but it's not statically generated.
+
+Depending on how easy it's to use `localStorage` maybe a better solution is to create an ID/URL pair in `localStorage` and navigate to the ID.
+
+Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
+
+🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
 
 # Backend search
 
@@ -187,20 +203,6 @@ If there's just one openapi, load the overview of that one by default from the h
 Make a variation on the navigation that only shows the current openapi and a link to the homepage. Let's make `openapiforhumans.com/klippa` the place to have a single openapi without menu of others.
 
 It'd be great to also have some customisation like logos, coloring, etc. Let's do this custom for Klippa now, and come up with how to do this automatically at build-time.
-
-# Custom OpenAPI Support
-
-This form should simply check if it's found and if it's correct.
-
-If it is, it should navigate to `/{urlEncoded(url)}`
-
-If possible, we can also add this one to `localStorage` from here so it will stay in the menu for a user, but it's not statically generated.
-
-Depending on how easy it's to use `localStorage` maybe a better solution is to create an ID/URL pair in `localStorage` and navigate to the ID.
-
-Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
-
-🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
 
 # Proxy API
 
