@@ -58,6 +58,7 @@ export async function generateMetadata(
   return {
     title: operationId ? `${openapiId} - ${operationId}` : openapiId,
     description,
+    openGraph: { images: openapiDetails.document.info?.branding?.logoImageUrl },
   };
 }
 

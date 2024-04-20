@@ -169,9 +169,8 @@ TODO:
 - ✅ Add correct metadata (title + basic description)
 - ✅ Add description being from the operation description
 - ✅ Add image from openapi info logo url for serper.dev (and add it to the spec)
-- Proxy All OpenAPIs I have now
 - Create a sitemap so these pages are indexable.
-- The hardcoded openapis will be cached in HTML at buildtime.
+- ✅ The hardcoded openapis will be cached in HTML at buildtime.
 - Allow for refetching certain OpenAPI paths via next endpoint to regenerate it (or auto-revalidate it every minute)
 
 # Custom OpenAPI Support
