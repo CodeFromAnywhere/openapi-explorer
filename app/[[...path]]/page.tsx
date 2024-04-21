@@ -96,15 +96,14 @@ const Pathpage = async (props: HomepageProps) => {
   const operationId = props?.params?.path?.[1];
   const list = await fetchList();
   const openapiUrl = getOpenapiUrl(openapiId, list || []);
-
-  if (!openapiId || !openapiUrl) {
-    return <Homepage />;
-  }
-
   const openapiDetails =
     openapiId && openapiUrl
       ? await getOpenapiOperations(openapiId, openapiUrl)
       : undefined;
+
+  if (!openapiId || !openapiUrl) {
+    return <Homepage />;
+  }
 
   const operationDetails = operationId
     ? openapiDetails?.operations?.find((x) => x.id === operationId)
