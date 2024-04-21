@@ -33,22 +33,26 @@ export const generateStaticParamsForOperations = async () => {
     return [];
   }
 
-  const openapis = await getOpenapisOperations(list, selectedIds);
-  const params = openapis.map((item) => {
-    const openapiParams: {
-      path?: PathParam;
-    }[] = item.operations.map((item) => {
-      const { operation, path, method, openapiId } = item;
-      // NB: operationId is not required, so we need to use path=method as unique identifier incase there isn't one
-      const operationId = operation.operationId || `${path}=${method}`;
+  //const openapis = await getOpenapisOperations(list, selectedIds);
+  const params = list.map((item) => {
+    // const openapiParams: {
+    //   path?: PathParam;
+    // }[] = item.operations.map((item) => {
+    //   const { operation, path, method, openapiId } = item;
+    //   // NB: operationId is not required, so we need to use path=method as unique identifier incase there isn't one
+    //   const operationId = operation.operationId || `${path}=${method}`;
 
-      const pathParam: PathParam = [openapiId, operationId];
+    //   const pathParam: PathParam = [openapiId, operationId];
 
-      return { path: pathParam };
-    });
+    //   return { path: pathParam };
+    // });
 
     // NB: Add the route where there's no operation defined.
-    return openapiParams.concat([{ path: [item.openapiId, undefined] }]);
+    const res: {
+      path?: PathParam;
+    }[] = [{ path: [item.key, undefined] }];
+
+    return res;
   });
 
   return params.concat([{}]);

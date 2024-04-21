@@ -19,7 +19,6 @@ export default async function PathLayout(props: {
   const { children, params } = props;
 
   const list = await fetchList();
-  const openapis = await getOpenapisOperations(list || [], selectedIds);
   const [openapiId, operationId] =
     params?.path && Array.isArray(params.path)
       ? params.path
@@ -33,14 +32,8 @@ export default async function PathLayout(props: {
         <nav className="max-lg:w-full col-span-1 lg:h-screen lg:overflow-y-scroll border-gray-500 border-r-2">
           <OpenapiExplorer
             LinkComponent={Link}
-            onRefreshOpenapis={(openapiIds) => {
-              // should refresh these api(s) - which is likely 1 or all
-            }}
             lastSearchResults={[]}
-            onSubmitSearch={() => {
-              // todo
-            }}
-            openapis={openapis}
+            openapis={list!}
             openapiId={openapiId}
             operationId={operationId}
           />

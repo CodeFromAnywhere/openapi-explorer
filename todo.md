@@ -190,18 +190,20 @@ TODO:
 - ✅ change servers to `https://[key].dataman.ai` and change `x-origin-servers` to `[{url:"original url"}]`
 - ✅ ensure key can be a subdomain
 
-# ❗️❗️❗️Embed it all in explorer.actionschema.com❗️❗️❗️
-
-- ✅ Make the proxy work in a way that I can provide headers and it will pass it on.
-- On the openapi overview page, add links for different explorers for the openapi (same as with https://apis.guru) so we can test things.
-- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
-- Confirm the proxy works by testing `serper.dataman.ai/serper.json`
-
 # Realtime OpenAPI Search
 
 - ✅ Use `list.dataman.ai/list.json` in `openapi-for-humans-next` at buildtime to build and show the menu.
 - ✅ Ensure hardcoded list I had originally is also part of it.
-- Make a client component so we can search through the list in realtime.
+- ✅ Make a client component so we can search through the list in realtime.
+- Also add realtime search in the navigation. Just make it a client component.
+- Fix serverless function timeout: we don't need the operations in the menu, let's kiss.
+
+# ❗️❗️❗️ Embed it all in explorer.actionschema.com ❗️❗️❗️
+
+- ✅ Make the proxy work in a way that I can provide headers and it will pass it on.
+- ✅ On the openapi overview page, add links for different explorers for the openapi (same as with https://apis.guru) so we can test things.
+- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
+- Confirm the proxy works by testing `serper.dataman.ai/serper.json` in swaggerui
 
 # Improved OpenAPI Standard
 
