@@ -11,6 +11,7 @@ import {
 import { ScrollToActiveOperation } from "../ScrollToActiveOperation";
 
 export const dynamicParams = true;
+
 export const generateStaticParams = generateStaticParamsForOperations;
 export default async function PathLayout(props: {
   children: any;
