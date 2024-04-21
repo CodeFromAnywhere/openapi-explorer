@@ -172,6 +172,56 @@ TODO:
 - ✅ The hardcoded openapis will be cached in HTML at buildtime.
 - ❌ Create a sitemap so these pages are indexable.
 
+# Allow for wildcard domain
+
+- ✅ Added `*.dataman.ai` as main domain and changed its nameservers to vercelDNS
+- ✅ Change proxy in a way that it looks at subdomain and find the right openapi file
+
+# SUPERPROXY: Create proxies for all of them
+
+- ✅ Make a script that:
+  - lists all current JSONs in `public`
+  - pulls https://api.apis.guru/v2/list.json and reformats it into flat-object array
+  - add my own OpenAPI list too besides this.
+  - add a unique key for each api
+  - puts all `x-origin` openapi urls into `next-openapi-proxy/public` with name `[key].json`
+- ✅ Confirm the above is possible to host on Vercel (must be <13GB)
+- ✅ Add an api `/list.json` that responds with all openapi paths.
+- ✅ change servers to `https://[key].dataman.ai` and change `x-origin-servers` to `[{url:"original url"}]`
+- ✅ ensure key can be a subdomain
+
+# ❗️❗️❗️Embed it all in explorer.actionschema.com❗️❗️❗️
+
+- ✅ Make the proxy work in a way that I can provide headers and it will pass it on.
+- On the openapi overview page, add links for different explorers for the openapi (same as with https://apis.guru) so we can test things.
+- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
+- Confirm the proxy works by testing `serper.dataman.ai/serper.json`
+
+# Realtime OpenAPI Search
+
+- ✅ Use `list.dataman.ai/list.json` in `openapi-for-humans-next` at buildtime to build and show the menu.
+- ✅ Ensure hardcoded list I had originally is also part of it.
+- Make a client component so we can search through the list in realtime.
+
+# Improved OpenAPI Standard
+
+- Come up with a pricing standard similar to how I implemented my server, but OpenAPI Design-first. Rather than only supporting pay-as-you-go, also give people a way to define subscription plans, where the pay-as-you-go is defined in credits.
+- Come up with a ratelimit standard so it's clear for endpoints what the ratelimit is. If needed, should be for different plans.
+- Change all my additions to be prepended with `x-`
+- Remove `branding` and add `x-logo` like apiguru.
+
+# Crawling Website Info
+
+Do some market research finding website crawling apis.
+
+Think about pulling my own with serverless nextjs + browserless
+
+Implement or find an openapi for firecrawl.dev or similar.
+
+Obtain docs site, pricing, signup, and auth info: Need web scraping for this.
+
+As soon as possible, I need this superproxy to be authenticated for a % of them, and I need to be able to confirm this works.
+
 # Custom OpenAPI Support
 
 `AddCustomApi` client component.
@@ -185,6 +235,21 @@ If possible, we can also add this one to `localStorage` from here so it will sta
 Depending on how easy it's to use `localStorage` maybe a better solution is to create an ID/URL pair in `localStorage` and navigate to the ID.
 
 Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
+
+#
+
+To get more openapis, see https://blog.postman.com/what-we-learned-from-200000-openapi-files/
+
+- they collected approximately 11,000 OpenAPI documents from GitHub using Google’s BigQuery framework
+- Then, 10,000 more OAS documents were added from the SwaggerHub API,
+- Finally, 44,500 more API definitions were added by brute force scanning the web for likely URL endpoints at which OAS documents might be exposed
+
+Also, apiguru has lots of apis in their repo:
+
+- https://api.apis.guru/v2/list.json
+- https://apis.guru
+
+Mike Ralphson: mike.ralphson@gmail.com
 
 # Refresh
 
@@ -234,13 +299,13 @@ Explore LangChain, Robocorp and the tooling they made and see where it can be co
 
 ## GTM ideas
 
-- `OpenAPIActionSchema` for OpenAPI improvement: examples, testing
+- `OpenAPIActionSchema` for OpenAPI improvement: examples, testing, docs, and much more.
+- Webapp for (open)GPTs to more easily find the right actions for agents.
 - Offer Support chat-agent for SaaS
 - Offer Execute-Agent for SaaS
 - Code recipes generation
 - Provide API playground website to SaaS
 - Provide paid search-access to Code-gen AIs
-- Webapp for openai to more easily find actions for agents (Milan)
 
 # LLM Search & Generating ActionSchemas
 

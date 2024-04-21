@@ -1,5 +1,7 @@
-import { getOpenapisOperations } from "openapi-for-humans-react";
-import { openapiUrlObject } from "./openapiUrlObject";
+import {
+  OpenapiListItem,
+  getOpenapisOperations,
+} from "openapi-for-humans-react";
 import { selectedIds } from "./selectedIds";
 
 /**
@@ -9,12 +11,29 @@ import { selectedIds } from "./selectedIds";
  */
 export type PathParam = (string | undefined)[];
 
-/** Returns static params for any component to render with all these params
+export const fetchList = async () => {
+  try {
+    const list = await fetch("https://list.dataman.ai/list.json", {
+      cache: "no-cache",
+    }).then((res) => res.json() as Promise<OpenapiListItem[]>);
+    return list;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+/**
+ * Returns static params for any component to render with all these params
  *
  * Returns params for each operation that is selected
  */
 export const generateStaticParamsForOperations = async () => {
-  const openapis = await getOpenapisOperations(openapiUrlObject, selectedIds);
+  const list = await fetchList();
+  if (!list) {
+    return [];
+  }
+
+  const openapis = await getOpenapisOperations(list, selectedIds);
   const params = openapis.map((item) => {
     const openapiParams: {
       path?: PathParam;

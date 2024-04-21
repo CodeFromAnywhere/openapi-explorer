@@ -1,15 +1,14 @@
 import {
-  OperationPage,
+  OpenapiListItem,
   OpenapiOverviewPage,
-  getOpenapisOperations,
   getOpenapiOperations,
 } from "openapi-for-humans-react";
-import { OpenapiOperationObject, fetchOpenapi, notEmpty } from "from-anywhere";
 import { Metadata, ResolvingMetadata } from "next";
 import { tryParseUrlFromId } from "./tryParseUrlFromId";
-import { openapiUrlObject } from "../openapiUrlObject";
-import { selectedIds } from "../selectedIds";
-import { generateStaticParamsForOperations } from "../generateStaticParamsForOperations";
+import {
+  fetchList,
+  generateStaticParamsForOperations,
+} from "../generateStaticParamsForOperations";
 import { Homepage } from "./Homepage";
 import { NextOperationPage } from "./NextOperationPage";
 
@@ -27,7 +26,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { params, searchParams } = props;
   const openapiId = params?.path?.[0];
-  const openapiUrl = getOpenapiUrl(openapiId);
+  const list = await fetchList();
+  const openapiUrl = getOpenapiUrl(openapiId, list || []);
   const defaultMetadata = {
     title: "OpenAPI for Humans",
     description:
@@ -79,14 +79,23 @@ type PathParam = [string | undefined, string | undefined];
  */
 export const generateStaticParams = generateStaticParamsForOperations;
 
-const getOpenapiUrl = (openapiId: string | undefined) =>
-  openapiId && Object.keys(openapiUrlObject).includes(openapiId)
-    ? openapiUrlObject[openapiId as keyof typeof openapiUrlObject]
-    : tryParseUrlFromId(openapiId);
+const getOpenapiUrl = (
+  openapiId: string | undefined,
+  list: OpenapiListItem[],
+) => {
+  const key = list.find((x) => x.key === openapiId)?.key;
+  if (!key) {
+    return tryParseUrlFromId(openapiId);
+  }
+
+  return `https://${key}.dataman.ai/${key}.json`;
+};
+
 const Pathpage = async (props: HomepageProps) => {
   const openapiId = props?.params?.path?.[0];
   const operationId = props?.params?.path?.[1];
-  const openapiUrl = getOpenapiUrl(openapiId);
+  const list = await fetchList();
+  const openapiUrl = getOpenapiUrl(openapiId, list || []);
 
   if (!openapiId || !openapiUrl) {
     return <Homepage />;

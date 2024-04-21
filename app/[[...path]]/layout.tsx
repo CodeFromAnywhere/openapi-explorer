@@ -3,9 +3,11 @@ import {
   OpenapiExplorer,
   getOpenapisOperations,
 } from "openapi-for-humans-react";
-import { openapiUrlObject } from "../openapiUrlObject";
 import { selectedIds } from "../selectedIds";
-import { generateStaticParamsForOperations } from "../generateStaticParamsForOperations";
+import {
+  fetchList,
+  generateStaticParamsForOperations,
+} from "../generateStaticParamsForOperations";
 import { ScrollToActiveOperation } from "../ScrollToActiveOperation";
 
 export const dynamicParams = true;
@@ -16,7 +18,8 @@ export default async function PathLayout(props: {
 }) {
   const { children, params } = props;
 
-  const openapis = await getOpenapisOperations(openapiUrlObject, selectedIds);
+  const list = await fetchList();
+  const openapis = await getOpenapisOperations(list || [], selectedIds);
   const [openapiId, operationId] =
     params?.path && Array.isArray(params.path)
       ? params.path
