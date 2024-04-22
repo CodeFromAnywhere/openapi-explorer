@@ -202,34 +202,34 @@ TODO:
 - ✅ Add stateful search with url so it remains the same across pageloads and we can share it.
 - ✅ Ensure listed apis go first by sort
 
+🎉 APIs are searchable
+
 # Fix Cache
 
-- Read about next-app-router caching and fix that the list.json is refreshed. Now, my hardcoded openapis are on top.
-- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it. Add a button on the openapi overview page to refresh.
+- ✅ Read about next-app-router caching and fix that the list.json is refreshed. Now, my hardcoded openapis are on top.
+- ✅ Allow for refetching certain OpenAPI paths via next endpoint to regenerate it. Add a button on the openapi overview page to refresh.
 
-# Fix proxy
+# Disable path checking
 
-- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
-- Confirm the proxy works by testing in `swagger-ui`
-  - some api that uses variables in the paths
-  - `serper.dataman.ai/serper.json`
+- ✅ Disable path validation in proxy for now
+- ✅ Disable explicit JSON conversion
+- ✅ Confirm the proxy works by testing in `swagger-ui`: `serper.dataman.ai/serper.json`
 
-🎉 APIs are searchable and proxy now works
-
-# DOMAIN
-
-If home....
-
-Buy openapiforhumans.com? cheap, good name
+🎉 proxy now works
 
 # Improved OpenAPI Standard and useful endpoints
 
-- Come up with a pricing standard similar to how I implemented my server, but OpenAPI Design-first. Rather than only supporting pay-as-you-go, also give people a way to define subscription plans, where the pay-as-you-go is defined in credits.
-- Come up with a ratelimit standard so it's clear for endpoints what the ratelimit is. If needed, should be for different plans.
-- Change all my additions to be prepended with `x-`
-- Remove `branding` and add `x-logo` like apiguru.
-- For serper.dev openapi, add information about docs, signup, pricing, etc in the openapi spec and fill it in nicely for serper.dev
-- Add information on how to auth (for now, require the user to make their token in serper.dev and pay there)
+- ✅ Come up with a pricing standard similar to how I implemented my server, but OpenAPI Design-first. Rather than only supporting pay-as-you-go, also give people a way to define subscription plans, where the pay-as-you-go is defined in credits.
+- ✅ Come up with a ratelimit standard so it's clear for endpoints what the ratelimit is. If needed, should be for different plans.
+- ✅ Change all my additions to be prepended with `x-`
+- ✅ Remove `branding` and add `x-logo` like apiguru.
+- ✅ add information about docs, signup, pricing, etc in the openapi spec
+- ✅ Add information on how to auth (for now, require the user to make their token in serper.dev and pay there)
+
+# Make more OpenAPIs
+
+- For serper.json handmade api, add auth specification as required (X-API-KEY header)
+- fill new spec in nicely for `handmade/serper.json`
 - Make openapi for https://doczilla.app and do the same
 - Do the same for https://Induced.ai
 - Do some market research finding website crawling apis.
@@ -239,6 +239,18 @@ Buy openapiforhumans.com? cheap, good name
 - Look at the other APIs I had as part of that, and add their openapi proxy independently.
 
 🎉 I've got some useful apis proxied now, I've built a layer to be able to improve them programatically, and adopted this scalable way to aggregating them!
+
+# DOMAIN
+
+If home....
+
+Buy openapiforhumans.com? cheap, good name
+
+# Grouping
+
+Read: https://swagger.io/docs/specification/grouping-operations-with-tags/\
+
+Show all tags and sort by it in Openapi overview Page
 
 # Crawling Website Info
 
