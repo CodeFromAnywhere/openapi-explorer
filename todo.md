@@ -199,7 +199,7 @@ TODO:
 - ✅ Make a client component so we can search through the list in realtime.
 - ✅ Fix serverless function timeout: we don't need the operations in the menu, let's KISS.
 - ✅ Also add realtime search in the navigation. Just make it a client component.
-- Make it scroll so the active openapi is on top
+- ✅ Add stateful search with url so it remains the same across pageloads and we can share it.
 - Add ability to favorite apis so they go on top for you. Ensure it already contains a default with some favorited for me that are nice.
 - Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
 - Confirm the proxy works by testing `serper.dataman.ai/serper.json` in swaggerui
