@@ -1,6 +1,5 @@
 import {
   OpenapiListItem,
-  OpenapiOverviewPage,
   getOpenapiOperations,
 } from "openapi-for-humans-react";
 import { Metadata, ResolvingMetadata } from "next";
@@ -11,6 +10,7 @@ import {
 } from "../generateStaticParamsForOperations";
 import { Homepage } from "./Homepage";
 import { NextOperationPage } from "./NextOperationPage";
+import { OpenapiOverviewPage } from "./OpenapiOverviewPage";
 
 type HomepageProps = {
   params?: { path: PathParam };

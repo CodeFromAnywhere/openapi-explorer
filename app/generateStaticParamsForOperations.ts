@@ -14,6 +14,7 @@ export type PathParam = (string | undefined)[];
 export const fetchList = async () => {
   try {
     const list = await fetch("https://list.dataman.ai/list.json", {
+      next: { revalidate: 86400, tags: ["list"] },
       //cache: "no-cache",
       //NB: this might raise an error
     }).then((res) => res.json() as Promise<OpenapiListItem[]>);

@@ -200,62 +200,71 @@ TODO:
 - ✅ Fix serverless function timeout: we don't need the operations in the menu, let's KISS.
 - ✅ Also add realtime search in the navigation. Just make it a client component.
 - ✅ Add stateful search with url so it remains the same across pageloads and we can share it.
-- Ensure listed apis go first by sort
-- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
-- Confirm the proxy works by testing `serper.dataman.ai/serper.json` in swaggerui
-- Test and favorite a few more.
+- ✅ Ensure listed apis go first by sort
 
-# Improved OpenAPI Standard
+# Fix Cache
+
+- Read about next-app-router caching and fix that the list.json is refreshed. Now, my hardcoded openapis are on top.
+- Allow for refetching certain OpenAPI paths via next endpoint to regenerate it. Add a button on the openapi overview page to refresh.
+
+# Fix proxy
+
+- Make proxy work: Paths matcher doesn't always match correctly. Read spec and ensure it matches with variables too.
+- Confirm the proxy works by testing in `swagger-ui`
+  - some api that uses variables in the paths
+  - `serper.dataman.ai/serper.json`
+
+🎉 APIs are searchable and proxy now works
+
+# DOMAIN
+
+If home....
+
+Buy openapiforhumans.com? cheap, good name
+
+# Improved OpenAPI Standard and useful endpoints
 
 - Come up with a pricing standard similar to how I implemented my server, but OpenAPI Design-first. Rather than only supporting pay-as-you-go, also give people a way to define subscription plans, where the pay-as-you-go is defined in credits.
 - Come up with a ratelimit standard so it's clear for endpoints what the ratelimit is. If needed, should be for different plans.
 - Change all my additions to be prepended with `x-`
 - Remove `branding` and add `x-logo` like apiguru.
+- For serper.dev openapi, add information about docs, signup, pricing, etc in the openapi spec and fill it in nicely for serper.dev
+- Add information on how to auth (for now, require the user to make their token in serper.dev and pay there)
+- Make openapi for https://doczilla.app and do the same
+- Do the same for https://Induced.ai
+- Do some market research finding website crawling apis.
+- Implement or find an openapi for firecrawl.dev or similar.
+- Find the endpoints that opengpts is using for things like wiki, ddg, and have those available as openapi too.
+- Add CodeFromAnywhere API
+- Look at the other APIs I had as part of that, and add their openapi proxy independently.
+
+🎉 I've got some useful apis proxied now, I've built a layer to be able to improve them programatically, and adopted this scalable way to aggregating them!
 
 # Crawling Website Info
 
-Do some market research finding website crawling apis.
+Think about pulling my own crawler with serverless nextjs + browserless or use another API
 
-Think about pulling my own with serverless nextjs + browserless
-
-Implement or find an openapi for firecrawl.dev or similar.
-
-Obtain docs site, pricing, signup, and auth info: Need web scraping for this.
+By using swagger, try to obtain docs site, pricing, signup, and auth info: Need web scraping for this.
 
 As soon as possible, I need this superproxy to be authenticated for a % of them, and I need to be able to confirm this works.
 
-# Custom OpenAPI Support
+Put the APIs of which I have authentication (or they're public) on top of the list, and mark them.
 
-`AddCustomApi` client component.
+In the proxy, ensure auth gets provided with a master auth key.
 
-This form should simply check if it's found and if it's correct.
+🎉 Now I have 10+ authed apis that can be used via my proxy
 
-If it is, it should navigate to `/{urlEncoded(url)}`
+# OpenAPI Agent
 
-If possible, we can also add this one to `localStorage` from here so it will stay in the menu for a user, but it's not statically generated.
+How do we create an agent for an OpenAPI? What are the limitations? Can we auto-create a standard agent endpoint for each openapi? This is already super valuable.
 
-Depending on how easy it's to use `localStorage` maybe a better solution is to create an ID/URL pair in `localStorage` and navigate to the ID.
+Ideally I can add a link on https://explorer.actionschema/xyz that leads to OpenGPTs with the custom agent enabled there. Fork them and make it possible if that can't be done yet.
 
-Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
+https://github.com/langchain-ai/opengpts and OpenAIs API should allow me to easily build an agent with a new serverless OpenAPI Proxy, and then test the agent. The perfect way would be to go to `opengpts.actionschema.com/new?url={openapi-url}` and then have the ability to create a new agent with a selection of the operations from there as actions.
 
-#
+Let mike.ralphson@gmail.com and Antti Sema4.ai know about this once it's there. It'd be very useful to be able to make agents so quickly and can be part of their docs. Maybe I can merge it in into opengpts.
 
-To get more openapis, see https://blog.postman.com/what-we-learned-from-200000-openapi-files/
-
-- they collected approximately 11,000 OpenAPI documents from GitHub using Google’s BigQuery framework
-- Then, 10,000 more OAS documents were added from the SwaggerHub API,
-- Finally, 44,500 more API definitions were added by brute force scanning the web for likely URL endpoints at which OAS documents might be exposed
-
-Also, apiguru has lots of apis in their repo:
-
-- https://api.apis.guru/v2/list.json
-- https://apis.guru
-
-Mike Ralphson: mike.ralphson@gmail.com
-
-# Refresh
-
-Allow for refetching certain OpenAPI paths via next endpoint to regenerate it
+🎉 Every API has an agent
 
 # Backend search
 
@@ -265,49 +274,11 @@ Implement `search/regular/{query}` to actually call some backend function that a
 
 Ultimately, a scalable API searching through thousands of APIs in a smart hierarchical way, would be what I really need.
 
-# Single OpenAPI homepage
-
-If there's just one openapi, load the overview of that one by default from the homepage. No redirect!
-
-Make a variation on the navigation that only shows the current openapi and a link to the homepage. Let's make `openapiforhumans.com/klippa` the place to have a single openapi without menu of others.
-
-It'd be great to also have some customisation like logos, coloring, etc. Let's do this custom for Klippa now, and come up with how to do this automatically at build-time.
-
-🎉 Now the menu is near-perfect, supporting single-api sites, multiple, and custom openapi adding. It should show the active one, and everything is super static and fast.
-
 # Proxy API
 
 Once we can reliably have an agent decide which APIs are useful for an agent, it should be able to take the set of actions and turn it into an `OpenAPIProxy`.
 
 Also, we need an API to host a proxy on a serverless endpoint with a single auth in front of the auths of the original apis. This can be done with the Vercel API, as long as we can set `.env` variables.
-
-# Test proxies with OpenGPTs and/or OpenAIs API
-
-https://github.com/langchain-ai/opengpts and OpenAIs API should allow me to easily build an agent with a new serverless OpenAPI Proxy, and then test the agent.
-
-The proxy creator is already an amazing idea, but when will it be useful and reliable? We need to test agents for that.
-
-# Next.js Installation Problem
-
-If we have `^0.0.5` or anything in our own packages, theres a big chance the package doesn't get updated to the latest version. Maybe this is `package-lock.json` at work? In this case, maybe there should be a predeploy that refreshes all packages to the latest version. This way we can be certain about the version number.
-
-# Validate the usefulness of this thing
-
-For each `explorer.actionschema.com/xyz` page, contact the company and try to get a meeting with them.
-
-Talk with multiple SaaS providers with an API about the usefulness of multiple GTM ideas.
-
-Explore LangChain, Robocorp and the tooling they made and see where it can be complemented.
-
-## GTM ideas
-
-- `OpenAPIActionSchema` for OpenAPI improvement: examples, testing, docs, and much more.
-- Webapp for (open)GPTs to more easily find the right actions for agents.
-- Offer Support chat-agent for SaaS
-- Offer Execute-Agent for SaaS
-- Code recipes generation
-- Provide API playground website to SaaS
-- Provide paid search-access to Code-gen AIs
 
 # LLM Search & Generating ActionSchemas
 
@@ -315,3 +286,15 @@ Explore LangChain, Robocorp and the tooling they made and see where it can be co
 - Add ability to select search results and export the openapi/operationId-pairs and also the entire JSON
 - Create a nice prompt for generating ActionSchemas which can use the above as context.
 - Make it easy to create an openapi proxy from selection.
+
+## GTM ideas
+
+- Talk with multiple SaaS providers with an API about the usefulness of multiple GTM ideas.
+- Explore LangChain, Robocorp and the tooling they made and see where it can be complemented.
+- `OpenAPIActionSchema` for OpenAPI improvement: examples, testing, docs, and much more.
+- Webapp for (open)GPTs to more easily find the right actions for agents.
+- Offer Support chat-agent for SaaS
+- Offer Execute-Agent for SaaS
+- Code recipes generation
+- Provide API playground website to SaaS
+- Provide paid search-access to Code-gen AIs

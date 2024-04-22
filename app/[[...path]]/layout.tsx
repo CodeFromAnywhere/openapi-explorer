@@ -9,6 +9,7 @@ import {
   generateStaticParamsForOperations,
 } from "../generateStaticParamsForOperations";
 import { ScrollToActiveOperation } from "../ScrollToActiveOperation";
+import { RefreshButton } from "./RefreshButton";
 
 export const dynamicParams = true;
 
@@ -40,6 +41,7 @@ export default async function PathLayout(props: {
           />
           {/* Needed to scroll active-operation into view upon pageload */}
           <ScrollToActiveOperation />
+          <RefreshButton />
         </nav>
 
         <div className="relative lg:h-screen lg:overflow-y-scroll col-span-3">
