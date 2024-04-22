@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 
 export const Homepage = async () => {
   const readmePath = path.resolve(".", "README.md");
-  console.log({ readmePath });
+  //console.log({ readmePath });
   const readme = await readFile(readmePath, "utf8");
 
   return (
