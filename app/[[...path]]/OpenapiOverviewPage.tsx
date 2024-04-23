@@ -41,6 +41,12 @@ export const OpenapiOverviewPage = (props: {
       title: "Stoplight",
       url: `https://elements-demo.stoplight.io/?spec=${openapiDetails.openapiUrl}`,
     },
+
+    {
+      title: "ActionSchema Combination Proxy",
+      url: `https://proxy.actionschema.com/?url=${openapiDetails.openapiUrl}`,
+    },
+
     {
       title: "Source",
       url: openapiDetails.openapiUrl,

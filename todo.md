@@ -228,17 +228,132 @@ TODO:
 
 # Make more OpenAPIs
 
-- For serper.json handmade api, add auth specification as required (X-API-KEY header)
-- fill new spec in nicely for `handmade/serper.json`
-- Make openapi for https://doczilla.app and do the same
-- Do the same for https://Induced.ai
-- Do some market research finding website crawling apis.
-- Implement or find an openapi for firecrawl.dev or similar.
-- Find the endpoints that opengpts is using for things like wiki, ddg, and have those available as openapi too.
-- Add CodeFromAnywhere API
-- Look at the other APIs I had as part of that, and add their openapi proxy independently.
+- ✅ For serper.json handmade api, add auth specification as required (`X-API-KEY` header)
+- ✅ Fill new spec in nicely for `handmade/serper.json`
+- ✅ Confirmed serper spec works in swagger UI 🎉
+- Added openapi for:
+  - ✅ pdfgen (doppio)
+  - ✅ browser api (browserless)
+  - browser agent
+    - 🟠 induced.ai (Asked them in Discord)
+    - ✅ multion.ai
+  - ✅ firecrawl.dev
+- ❌ Do some market research finding website crawling apis. **couldnt find any quick openapis. A more programmatic approach will be much better**
+- ❌ Find the endpoints that opengpts is using for things like wiki, ddg, and have those available as openapi too. **It uses some weird langchain primitives and generates an openapi from there**
+- 🟠 Look at the other APIs I had (`isPublic:true` && "plugin") as part of ActionSchema, and add their openapi proxy independently.
 
 🎉 I've got some useful apis proxied now, I've built a layer to be able to improve them programatically, and adopted this scalable way to aggregating them!
+
+# Building Blocks Blog
+
+✅ Fix `projectRoot` problem.
+
+✅ Deploy OS-Web
+
+✅ Put blog online but hidden.
+
+✅ Improve AS Homepage
+
+# Missing link 1: `OpenAPIProxy` <!--tuesday-->
+
+## Setup
+
+- ✅ Added and altered `openapi-proxy.schema.json` to `actionschema/types`
+- ✅ Setup the skelleton for the next.js app router project
+
+## Frontend
+
+- ✅ Make a frontend that allows easy OpenAPIProxy creation via a form.
+- ✅ Serve this on `proxy.actionschema.com`
+- ✅ Add `?url=xxx&url=xxx` capability so it's easy to prefil the form with openapis and a selection of available operations
+- ✅ Ensure it submits to `makeProxyOpenapi` and responds with result.
+- ✅ Add another button that simply responds with the `OpenapiProxy` Json instead.
+- In explorer, add a link to `proxy.actionschema.com?url=xxx`
+
+## Creation
+
+- Implement `makeProxyOpenapi(proxy)` which turns an `OpenapiProxy` into an `openapi.json`
+- Make it so that the openapis created get stored into kv-storage and served at `proxy.actionschema.com/[id]/openapi.json` and the api served at `proxy.actionschema.com/[id]/` and serve a nice homepage for every proxy too.
+
+## Proxy Request
+
+- Implement `handleProxyRequest(proxy,openapi)` that propogates the requests to the right real server.
+
+## Testing
+
+- Make a proxy for AssistantCRUD and get an openapi for this that's hosted and functional: listAssistants, createAssistant, getAssistant,modifyAssistant, deleteAssistant.
+- Make an assistant for this very OpenAPI via the OpenAPI playground and confirm it's somewhat working.
+
+<!-- This is my super valuable tool for any AI enthousiast already. -->
+
+# Missing link 2: `AgentOpenAPI`
+
+For a created agent in OpenAI, we need an OpenAPI to be created so agents become stackable.
+
+- OpenAPI: `agent.actionschema.com/[userid]/[id]/openapi.json`
+- Server: `agent.actionschema.com/[userid]/[id]/**`
+- Homepage: `agent.actionschema.com`: Fill in your OpenAI key, store this in kv with a created userId, and redirect to your page: `/[userId]`
+- Userpage: `agent.actionschema.com/[userId]` will render exploration of all agents from the given user.
+- NewAgentForm: `agent.actionschema.com/new?url=openapi` will allow easy creation of a new agent in your OpenAPI account with the openapi prefilled.
+
+> Now I need to answer the question how to make agents reliable. And I think it can be done by making their possible behaviors simple enough and unambiguous.
+
+# Safety
+
+Last but not least, reason about a "safety" building block that needs to be there. `Decentralised Action Tracking` would be my bet: any agent will only perform any action given he knows the context in which this action has impact and confirms the ethical nature of the action. Therefore, any agent needs to be provided additional context for performing an action, and any agent needs to provide additional context. Besides, some high-level metrics should be visible: agents cannot work in the darkness. Inspired by humans. Old blog: https://www.actionschema.com/blog/agi-decentralised-oversight
+
+# Twilio Relay OpenAPI:
+
+Rename this to `human-openapi` and make it possible there to create it for multiple humans. BYOK on user-level.
+
+`twilio-relay` (should be serverless standalone with bring your own twilio)
+
+Host this next project on human.actionschema.com
+
+# MAIL
+
+Make a PR in APIS.guru and Let `mike.ralphson@gmail.com` know.
+
+Let Antti Sema4.ai know about this as well, once it's there. It'd be very useful to be able to make agents so quickly and can be part of their docs. Maybe I can merge it in into opengpts.
+
+# SWC UTIL (tuesday)
+
+- `swc-util` needs to become a standalone CLI + api
+- Use that api to be able to generate an openapi from code in a serverless environment
+- Use that for the below apis I want to setup. This way it should be much faster.
+
+# Make Webscraping API (Wednesday)
+
+Think about pulling my own crawler with serverless nextjs + browserless or use another API.
+
+- `fromHtmlGetRecurringElementsPlugin`
+- `getRichLink`
+- `getRichTextPlugin`
+- `stripHtml`
+- Other HTML to markdown stuff ;)
+- `markdownToHtml.ts` is a simple utility function but very useful. maybe can also use `markdown-wasm` in serverless. In that case, could be even better.
+- Good ideas:
+  - function to scrape all internal links, recursively, and make a contentMap for links on each page. also respond with the external links and whether or not they are follow. This can be a base for a pagerank algo
+  - function to find sitemap
+  - function to get robots.txt in json
+
+Just spend 2 hours on this and expose that on `scraping.actionschema.com`
+
+# Make Replicate OpenAPI (Thursday)
+
+`replicate-wrapper` contains a lot of nice ones. I experimented before generating the openapi spec for their project. Let's do this now in serverless standalone project so others can benefit too.
+
+# LLM Prompting Cookbook & OpenAPI
+
+- `gpt-data-util` is full of useful GPT Data Creation Prompts that can easily be exposed as serverless OpenAPI
+- Other things in `ai-scraping` can be very useful (such as `person-insights`)
+- `getJobData.ts`
+- `imageToJson`
+- `audioToJson` (needed for sprent)
+
+# PRINT
+
+**Let's Print `ai-scraping`**: There's lots of code there that will be good to freshen up on. Let's print it all out!
 
 # DOMAIN
 
@@ -254,10 +369,6 @@ Show all tags and sort by it in Openapi overview Page
 
 # Crawling Website Info
 
-Think about pulling my own crawler with serverless nextjs + browserless or use another API
-
-By using swagger, try to obtain docs site, pricing, signup, and auth info: Need web scraping for this.
-
 As soon as possible, I need this superproxy to be authenticated for a % of them, and I need to be able to confirm this works.
 
 Put the APIs of which I have authentication (or they're public) on top of the list, and mark them.
@@ -265,18 +376,6 @@ Put the APIs of which I have authentication (or they're public) on top of the li
 In the proxy, ensure auth gets provided with a master auth key.
 
 🎉 Now I have 10+ authed apis that can be used via my proxy
-
-# OpenAPI Agent
-
-How do we create an agent for an OpenAPI? What are the limitations? Can we auto-create a standard agent endpoint for each openapi? This is already super valuable.
-
-Ideally I can add a link on https://explorer.actionschema/xyz that leads to OpenGPTs with the custom agent enabled there. Fork them and make it possible if that can't be done yet.
-
-https://github.com/langchain-ai/opengpts and OpenAIs API should allow me to easily build an agent with a new serverless OpenAPI Proxy, and then test the agent. The perfect way would be to go to `opengpts.actionschema.com/new?url={openapi-url}` and then have the ability to create a new agent with a selection of the operations from there as actions.
-
-Let mike.ralphson@gmail.com and Antti Sema4.ai know about this once it's there. It'd be very useful to be able to make agents so quickly and can be part of their docs. Maybe I can merge it in into opengpts.
-
-🎉 Every API has an agent
 
 # Backend search
 
