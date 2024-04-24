@@ -256,15 +256,17 @@ TODO:
 
 # Fix enhancement proxy (openapi.actionschema.com)
 
-- `openapi-enhancement-proxy-next` should route the key as first pathname chunk rather than subdomain
-- when generating the server url, also use the key in pathname, and proxy is located at openapi.actionschema.com
-- add homepage on which is instructed to clone to make your own, and link to explorer to discover all.
+- ✅ `openapi-enhancement-proxy-next` should route the key as first pathname chunk rather than subdomain
+- ✅ when generating the server url, also use the key in pathname, and proxy is located at openapi.actionschema.com
+- ✅ add homepage on which is instructed to clone to make your own, and link to explorer to discover all.
 
 # Fix explorer
 
-Fix 500 error
+✅ Fix 500 error
 
-# Missing link 1: `OpenAPIProxy` <!--tuesday-->
+Fix OpenAPI can't be found
+
+# Missing link 1: `OpenAPIProxy` <!--wednesday-->
 
 ## Setup
 

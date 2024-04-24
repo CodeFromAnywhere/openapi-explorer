@@ -96,6 +96,8 @@ const Pathpage = async (props: HomepageProps) => {
   const operationId = props?.params?.path?.[1];
   const list = await fetchList();
   const openapiUrl = getOpenapiUrl(openapiId, list || []);
+
+  console.log({ openapiUrl });
   const openapiDetails =
     openapiId && openapiUrl
       ? await getOpenapiOperations(openapiId, openapiUrl)
