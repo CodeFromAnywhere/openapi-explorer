@@ -21,6 +21,7 @@ export default async function PathLayout(props: {
   const { children, params } = props;
 
   const list = await fetchList();
+
   const [openapiId, operationId] =
     params?.path && Array.isArray(params.path)
       ? params.path
@@ -32,13 +33,17 @@ export default async function PathLayout(props: {
     <div>
       <div className="lg:grid lg:grid-cols-4">
         <nav className="max-lg:w-full col-span-1 lg:h-screen lg:overflow-y-scroll border-gray-500 border-r-2">
-          <OpenapiExplorer
-            LinkComponent={Link}
-            lastSearchResults={[]}
-            openapis={list!}
-            openapiId={openapiId}
-            operationId={operationId}
-          />
+          {list ? (
+            <OpenapiExplorer
+              LinkComponent={Link}
+              lastSearchResults={[]}
+              openapis={list}
+              openapiId={openapiId}
+              operationId={operationId}
+            />
+          ) : (
+            <div>Could not load list</div>
+          )}
           {/* Needed to scroll active-operation into view upon pageload */}
           <ScrollToActiveOperation />
           <RefreshButton />

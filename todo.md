@@ -254,6 +254,16 @@ TODO:
 
 ✅ Improve AS Homepage
 
+# Fix enhancement proxy (openapi.actionschema.com)
+
+- `openapi-enhancement-proxy-next` should route the key as first pathname chunk rather than subdomain
+- when generating the server url, also use the key in pathname, and proxy is located at openapi.actionschema.com
+- add homepage on which is instructed to clone to make your own, and link to explorer to discover all.
+
+# Fix explorer
+
+Fix 500 error
+
 # Missing link 1: `OpenAPIProxy` <!--tuesday-->
 
 ## Setup
@@ -268,12 +278,13 @@ TODO:
 - ✅ Add `?url=xxx&url=xxx` capability so it's easy to prefil the form with openapis and a selection of available operations
 - ✅ Ensure it submits to `makeProxyOpenapi` and responds with result.
 - ✅ Add another button that simply responds with the `OpenapiProxy` Json instead.
-- In explorer, add a link to `proxy.actionschema.com?url=xxx`
+- ✅ In explorer, add a link to `proxy.actionschema.com?url=xxx`
 
 ## Creation
 
 - Implement `makeProxyOpenapi(proxy)` which turns an `OpenapiProxy` into an `openapi.json`
-- Make it so that the openapis created get stored into kv-storage and served at `proxy.actionschema.com/[id]/openapi.json` and the api served at `proxy.actionschema.com/[id]/` and serve a nice homepage for every proxy too.
+- Make it so that the openapis created get stored into kv-storage and served at `proxy.actionschema.com/[id]/openapi.json` and the api served at `proxy.actionschema.com/[id]/` and
+- ✅ s e r v e a nice homepage for every proxy too.
 
 ## Proxy Request
 
@@ -293,8 +304,9 @@ For a created agent in OpenAI, we need an OpenAPI to be created so agents become
 - OpenAPI: `agent.actionschema.com/[userid]/[id]/openapi.json`
 - Server: `agent.actionschema.com/[userid]/[id]/**`
 - Homepage: `agent.actionschema.com`: Fill in your OpenAI key, store this in kv with a created userId, and redirect to your page: `/[userId]`
-- Userpage: `agent.actionschema.com/[userId]` will render exploration of all agents from the given user.
-- NewAgentForm: `agent.actionschema.com/new?url=openapi` will allow easy creation of a new agent in your OpenAPI account with the openapi prefilled.
+- Userpage: `agent.actionschema.com/[userId]?url=openapi`
+  - will render exploration of all agents from the given user.
+  - `?url=openapi` or manually filling in will allow easy creation of a new agent in your OpenAPI account with the openapi prefilled.
 
 > Now I need to answer the question how to make agents reliable. And I think it can be done by making their possible behaviors simple enough and unambiguous.
 
@@ -309,6 +321,10 @@ Rename this to `human-openapi` and make it possible there to create it for multi
 `twilio-relay` (should be serverless standalone with bring your own twilio)
 
 Host this next project on human.actionschema.com
+
+# data.actionschema.com
+
+Make this the actionschema website on which CRUDE openapis get served from the server.
 
 # MAIL
 
@@ -409,3 +425,5 @@ Also, we need an API to host a proxy on a serverless endpoint with a single auth
 - Code recipes generation
 - Provide API playground website to SaaS
 - Provide paid search-access to Code-gen AIs
+
+https://www.youtube.com/watch?v=bXxq8RQUfXk <-- github 20k stars guy explains.

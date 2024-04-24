@@ -88,7 +88,7 @@ const getOpenapiUrl = (
     return tryParseUrlFromId(openapiId);
   }
 
-  return `https://${key}.dataman.ai/${key}.json`;
+  return `https://openapi.actionschema.com/${key}/openapi.json`;
 };
 
 const Pathpage = async (props: HomepageProps) => {
