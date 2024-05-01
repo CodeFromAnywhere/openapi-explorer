@@ -113,9 +113,12 @@ const Pathpage = async (props: HomepageProps) => {
 
   return (
     <div>
-      {openapiDetails ? (
+      {openapiDetails && openapiUrl ? (
         operationDetails ? (
-          <NextOperationPage operationDetails={operationDetails} />
+          <NextOperationPage
+            openapiUrl={openapiUrl}
+            operationDetails={operationDetails}
+          />
         ) : (
           <OpenapiOverviewPage openapiDetails={openapiDetails} />
         )
