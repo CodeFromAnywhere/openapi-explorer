@@ -1,6 +1,6 @@
 {
   "name": "openapi-for-humans-next",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "from-anywhere": "^0.0.23",
+    "from-anywhere": "^0.0.29",
     "js-yaml": "^4.1.0",
     "next": "14.2.1",
-    "openapi-for-humans-react": "^0.0.33",
+    "openapi-for-humans-react": "^0.0.36",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1"
