@@ -72,7 +72,7 @@ export const dynamicParams = true;
  *
  * However, the operation need not be defined, and can be undefined.
  */
-type PathParam = [string | undefined, string | undefined];
+type PathParam = (string | undefined)[];
 
 /**
  * https://nextjs.org/docs/app/api-reference/functions/generate-static-params#generate-only-a-subset-of-params
@@ -93,11 +93,22 @@ const getOpenapiUrl = (
 
 const Pathpage = async (props: HomepageProps) => {
   const openapiId = props?.params?.path?.[0];
-  const operationId = props?.params?.path?.[1];
+
+  if (openapiId === "_next") {
+    return <div>No next</div>;
+  }
+
+  const encodedOperationId = (props?.params?.path?.slice(1) || [])
+    .filter((x) => !!x)
+    .map((x) => x as string)
+    .join("/");
+
+  const operationId = decodeURIComponent(encodedOperationId);
+
   const list = await fetchList();
   const openapiUrl = getOpenapiUrl(openapiId, list || []);
 
-  console.log({ openapiUrl });
+  console.log({ openapiId, openapiUrl, operationId });
   const openapiDetails =
     openapiId && openapiUrl
       ? await getOpenapiOperations(openapiId, openapiUrl)
@@ -111,6 +122,7 @@ const Pathpage = async (props: HomepageProps) => {
     ? openapiDetails?.operations?.find((x) => x.id === operationId)
     : undefined;
 
+  //  console.dir({ openapiDetails }, { depth: 4 });
   return (
     <div>
       {openapiDetails && openapiUrl ? (

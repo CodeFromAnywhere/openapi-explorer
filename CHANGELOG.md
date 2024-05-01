@@ -166,8 +166,8 @@
 - ✅ Take some `actionschema-web` stuff that was similar and make this opensource. If treeshaking works, better just make one huge package `cfa-react` or so or general purpose utils, then some more niche packages.
 - ❌ `schema-util` can become an open-source package `oai-schema-tools` or so for both openapi and json-schema conventions. In there, let's refer to other people having made stuff. Also document my choices and learnings, and tips&tricks there. Look for other people making utils for this that is well-maintained.
 - ✅ Resolve body schema in `getOpenapiOperations.ts`. Get it fully resolved from the openapi. Do some research to find this function.
-- Now render the form in the standard way without the variables-string stuff.
-- Provide required header info to the form in the right way and add this as additional (maybe prefilled) values to the form.
+- ✅ Now render the form in the standard way without the variables-string stuff.
+- ✅ Provide required header info to the form in the right way and add this as additional (maybe prefilled) values to the form.
 
 ## OpenAPI Form Creation
 
@@ -179,27 +179,62 @@
 
 ## Back to `openapi-for-humans-next`
 
-- Look at what I had in the actionschema and actionschema-demo codebases for form filling and copy over anything useful to `openapi-util`
-- Install react in `openapi-util` and `rjsf`
-- Use `rjsf` properly in the new form component.
-- Test the same component in `openapi-for-humans-next` for every operation you can click. Tag-based paging comes later.
-- Incorporate top-level openapi-security as well into the form.
-- Secrets such as auth can be `password inputs` with toggles to view and copy.
-- Create a localStorage in the explorer that remembers input fields so it's super easy to test endpoints quickly:
-  - security per openapi/server
-  - headers per openapi/server + variable name
-  - inputsField content per operationId
-- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted
+- ✅ Look at what I had in the actionschema and actionschema-demo codebases for form filling and copy over anything useful to `openapi-util`
+- ✅ Install react in `openapi-util` and `rjsf`
+- ✅ Use `rjsf` properly in the new form component.
+- ✅ Test the same component in `openapi-for-humans-next` for every operation you can click. Tag-based paging comes later.
+- ✅ Make it successfully render some form
 
-After this works well and I can submit forms easily, go back to `opencrud/CHANGELOG.md`
+## Fixes
 
-Demo this to Milan thursday.
+- ✅ Make `openapi-for-humans-next` build in localhost. Fix problems.
+- ✅ Some endpoints don't load; probably goes wrong in (de)serialisation
+- ✅ Some stuff doesn't require body. If this is the case, form should still be a form (without any inputs)
+- Make it build in prod
+- Fix some common crashes that may occur.
+
+## Compatibility
+
+- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted.
+- For GET endpoints we can probably instantly call the endpoint if there are no required non-defaulted variables with a form to edit stuff.
+
+## Custom URL direct
+
+Ability to fill in a URL as path which should direclty be read in realtime, and forms shown for it.
+
+Add ability to fil this path via an input "Custom OpenAPI"
+
+Needed for DEMO Milan.
+
+## OpenAPI Security
+
+Incorporate top-level openapi-security as well into the form. This is more complex though, as it can require form submission. Secrets such as auth can be `password inputs` with toggles to view and copy, but to submit them, sometimes requires explanation or a popup. In the end, it always results in some form of header or cookie. Best to make this a custom input that is part of the form.
+
+Make a custom component for this that is part of the form.
+
+For now only implement the http and basic types of authorization, as they're easy enough. For the others, show a warning so it's clear these forms won't work for auth-reasons.
+
+Confirm some of the openapis forms work.
+
+<!-- 🎉🎉🎉🎉 At this point, let's continue with OpenCRUD -->
+
+<!-- The below will further improve UX.... -->
+
+## Localstorage
+
+Create a localStorage in the explorer that remembers input fields so it's super easy to test endpoints quickly...
+
+- security per openapi/server
+- headers per openapi/server + variable name
+- inputsField content per operationId
 
 ## Tags
 
-Read: https://swagger.io/docs/specification/grouping-operations-with-tags/\
+<!-- This is not 100% certain to be actually a good interface as it may be clunky for some apis. Let's try it without breaking the other UX -->
 
-Show all tags and sort by it in Openapi overview Page
+Read: https://swagger.io/docs/specification/grouping-operations-with-tags
+
+Show all tags and sort by it in Openapi Overview Page
 
 Create a page for every tag in which we can find all forms for every operation within the tag.
 
