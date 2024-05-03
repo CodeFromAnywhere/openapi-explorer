@@ -190,33 +190,48 @@
 - ✅ Make `openapi-for-humans-next` build in localhost. Fix problems.
 - ✅ Some endpoints don't load; probably goes wrong in (de)serialisation
 - ✅ Some stuff doesn't require body. If this is the case, form should still be a form (without any inputs)
-- Make it build in prod
-- Fix some common crashes that may occur.
+- ✅ Make it build in prod
 
-## Compatibility
+## OpenAPI Security
 
-- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted.
+Incorporate top-level openapi-security as well into the form. This is more complex though, as it can require form submission. Secrets such as auth can be `password inputs` with toggles to view and copy, but to submit them, sometimes requires explanation or a popup. In the end, it always results in some form of header or cookie. Best to make this a custom input that is part of the form.
+
+Make a custom component for this that is part of the form. For now only implement the http and basic types of authorization, as they're easy enough. For the others, show a warning so it's clear these forms won't work for auth-reasons.
+
+TODO:
+
+- ✅ Add http and apiKey auth into `getFormSchema`
+- ✅ Reconstruct `securitySchemes` in `submitOperation`
+
+## UI
+
+- 🟠 Form submission should create a loading state
+- Form response should set JSON state and render that on top
+- Form should be above description (As it can be very long)
+- Darkmode
+
+## OpenAPI LLM Interpretation
+
+- Show all tags and sort by it in Openapi Overview Page
+- On the Overview Page, put the amount of tokens of the openapi (prettified and minified)
+- Try to create a string from an openapi that parses the apis into tags, endpoints, and summaries
+- Also show that string and how many tokens that is.
+- Create a button to go to groq with the above text + intro copied to clipboard
+
+## Further improvements
+
+- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted to any server regardless of browser-origin-policy-security.
+- For Klippa it still "no schema" warning
+- Cloudflare is gateway timeout (see logging, likely too slow or big)
 - For GET endpoints we can probably instantly call the endpoint if there are no required non-defaulted variables with a form to edit stuff.
+
+<!-- 🎉🎉🎉🎉 At this point, let's continue with OpenCRUD -->
 
 ## Custom URL direct
 
 Ability to fill in a URL as path which should direclty be read in realtime, and forms shown for it.
 
 Add ability to fil this path via an input "Custom OpenAPI"
-
-Needed for DEMO Milan.
-
-## OpenAPI Security
-
-Incorporate top-level openapi-security as well into the form. This is more complex though, as it can require form submission. Secrets such as auth can be `password inputs` with toggles to view and copy, but to submit them, sometimes requires explanation or a popup. In the end, it always results in some form of header or cookie. Best to make this a custom input that is part of the form.
-
-Make a custom component for this that is part of the form.
-
-For now only implement the http and basic types of authorization, as they're easy enough. For the others, show a warning so it's clear these forms won't work for auth-reasons.
-
-Confirm some of the openapis forms work.
-
-<!-- 🎉🎉🎉🎉 At this point, let's continue with OpenCRUD -->
 
 <!-- The below will further improve UX.... -->
 
@@ -233,8 +248,6 @@ Create a localStorage in the explorer that remembers input fields so it's super 
 <!-- This is not 100% certain to be actually a good interface as it may be clunky for some apis. Let's try it without breaking the other UX -->
 
 Read: https://swagger.io/docs/specification/grouping-operations-with-tags
-
-Show all tags and sort by it in Openapi Overview Page
 
 Create a page for every tag in which we can find all forms for every operation within the tag.
 

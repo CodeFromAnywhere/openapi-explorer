@@ -3,6 +3,7 @@ import {
   getOpenapiOperations,
 } from "openapi-for-humans-react";
 import { Metadata, ResolvingMetadata } from "next";
+import { HttpMethodEnum, getFormContext } from "openapi-util";
 import { tryParseUrlFromId } from "./tryParseUrlFromId";
 import {
   fetchList,
@@ -122,12 +123,21 @@ const Pathpage = async (props: HomepageProps) => {
     ? openapiDetails?.operations?.find((x) => x.id === operationId)
     : undefined;
 
+  const formContext = operationDetails
+    ? await getFormContext({
+        method: operationDetails.method as HttpMethodEnum,
+        path: operationDetails.path,
+        openapiUri: openapiUrl,
+      })
+    : undefined;
+
   //  console.dir({ openapiDetails }, { depth: 4 });
   return (
     <div>
       {openapiDetails && openapiUrl ? (
-        operationDetails ? (
+        operationDetails && formContext ? (
           <NextOperationPage
+            formContext={formContext}
             openapiUrl={openapiUrl}
             operationDetails={operationDetails}
           />

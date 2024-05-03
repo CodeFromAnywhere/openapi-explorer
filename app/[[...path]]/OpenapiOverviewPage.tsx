@@ -1,6 +1,8 @@
 "use client";
 
+import { notEmpty, onlyUnique2 } from "from-anywhere";
 import revalidateOpenapi from "./revalidateOpenapi";
+import { OpenAPIV3 } from "openapi-types";
 import { MatchingText, OpenapiDetails } from "openapi-for-humans-react";
 import { useState } from "react";
 import Markdown from "react-markdown";
@@ -11,18 +13,6 @@ export const OpenapiOverviewPage = (props: {
   const { openapiDetails } = props;
 
   const [search, setSearch] = useState("");
-
-  const filteredOperations =
-    !search || search.trim() === ""
-      ? openapiDetails.operations
-      : openapiDetails.operations.filter(
-          (item) =>
-            !search ||
-            item.id.toLowerCase().includes(search.toLowerCase()) ||
-            item.operation.summary
-              ?.toLowerCase()
-              .includes(search.toLowerCase()),
-        );
 
   const links = [
     {
@@ -53,6 +43,15 @@ export const OpenapiOverviewPage = (props: {
     },
   ];
 
+  const tags = openapiDetails.document.tags?.length
+    ? openapiDetails.document.tags
+    : openapiDetails.operations
+        .map((item) => item.operation.tags)
+        .filter(notEmpty)
+        .flat()
+        .filter(onlyUnique2())
+        .map((name) => ({ name } as OpenAPIV3.TagObject));
+
   return (
     <div className="p-20">
       <h1 className="text-3xl">{openapiDetails.document.info?.title}</h1>
@@ -78,12 +77,6 @@ export const OpenapiOverviewPage = (props: {
         </button>
       </div>
 
-      <div className="my-10">
-        <Markdown>{openapiDetails.document.info.description}</Markdown>
-      </div>
-
-      <p className="">Operations:</p>
-
       <input
         type="text"
         placeholder="Search"
@@ -92,25 +85,76 @@ export const OpenapiOverviewPage = (props: {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <ul className="py-10">
-        {filteredOperations.map((item) => {
-          return (
-            <li
-              className="list-disc list-inside"
-              key={item.operation.operationId}
-            >
-              <a href={`/${openapiDetails.openapiId}/${item.id}`}>
-                <MatchingText
-                  search={search || ""}
-                  text={`${item.id} - ${item.operation.summary}`}
-                  defaultTextClassName=""
-                  matchTextClassName="text-blue-500"
-                />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <ul>
+          {tags
+            .concat({ name: "__undefined", description: "No tags present" })
+            .map((tag) => {
+              const description = tag.description
+                ? `: ${tag.description}`
+                : tag.externalDocs
+                ? `: ${tag.externalDocs.url}`
+                : "";
+
+              const filtered = openapiDetails.operations
+                .filter((x) =>
+                  tag.name === "__undefined"
+                    ? !x.operation.tags?.length
+                    : x.operation.tags?.includes(tag.name),
+                )
+                .filter(
+                  (item) =>
+                    !search ||
+                    search.trim() === "" ||
+                    item.id.toLowerCase().includes(search.toLowerCase()) ||
+                    item.operation.summary
+                      ?.toLowerCase()
+                      .includes(search.toLowerCase()),
+                );
+              return filtered.length === 0 ? null : (
+                <li
+                  className={
+                    tag.name === "__undefined"
+                      ? undefined
+                      : "list-disc list-inside"
+                  }
+                  key={`tag${tag.name}`}
+                >
+                  {tag.name === "__undefined" ? null : (
+                    <div>
+                      <b>{tag.name}</b>
+                      {description}
+                    </div>
+                  )}
+
+                  <ul>
+                    {filtered.map((item) => {
+                      return (
+                        <li
+                          className="ml-10 list-disc list-inside"
+                          key={`item${tag.name}-${item.operation.operationId}`}
+                        >
+                          <a href={`/${openapiDetails.openapiId}/${item.id}`}>
+                            <MatchingText
+                              search={search || ""}
+                              text={`${item.id} - ${item.operation.summary}`}
+                              defaultTextClassName=""
+                              matchTextClassName="text-blue-500"
+                            />
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+
+      <div className="my-10">
+        <Markdown>{openapiDetails.document.info.description}</Markdown>
+      </div>
     </div>
   );
 };
