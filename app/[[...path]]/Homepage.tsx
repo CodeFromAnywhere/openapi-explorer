@@ -3,7 +3,7 @@ import path from "path";
 import Markdown from "react-markdown";
 
 export const Homepage = async () => {
-  const readmePath = path.resolve(".", "README.md");
+  const readmePath = path.resolve("public", "README.md");
   //console.log({ readmePath });
   const readme = await readFile(readmePath, "utf8");
 

@@ -7,9 +7,9 @@
 - Ability to use crawl agents that can build action-paths based on the openapis and a query.
 - Ability to use this repo as a template so people can deploy a frontend for their own openapi with customised settings, and easily extend it in any way.
 - Full support of JSON-based OpenAPI convention (as much as possible)
-- Ultimate goal: The UPI (Universal Programming Interface)
+- Ultimate goal: The UPI (Universal Programming Interface) ([more info](upi.md))
 
-![](flow.drawio.png)
+![](upi.drawio.png)
 
 ## Non-goals
 
