@@ -203,18 +203,18 @@ TODO:
 - ✅ Add http and apiKey auth into `getFormSchema`
 - ✅ Reconstruct `securitySchemes` in `submitOperation`
 
-## UI
-
-- 🟠 Form submission should create a loading state
-- Form response should set JSON state and render that on top
-- Form should be above description (As it can be very long)
-- Darkmode
-
 ## OpenAPI LLM Interpretation
 
 - ✅ Show all tags and sort by it in Openapi Overview Page
 - ✅ Try to create a string from an openapi that parses the apis into tags, endpoints, and summaries
 - ✅ Create a button to go to groq with the above text + intro copied to clipboard
+
+## UI
+
+- 🟠 Form submission should create a loading state
+- Form response should set JSON state and render that on top
+- Form should be above description (As it can be very long)
+- Darkmode should render the rjsforms nicely
 
 ## Further improvements
 
@@ -240,18 +240,6 @@ Create a localStorage in the explorer that remembers input fields so it's super 
 - security per openapi/server
 - headers per openapi/server + variable name
 - inputsField content per operationId
-
-## Tags
-
-<!-- This is not 100% certain to be actually a good interface as it may be clunky for some apis. Let's try it without breaking the other UX -->
-
-Read: https://swagger.io/docs/specification/grouping-operations-with-tags
-
-Create a page for every tag in which we can find all forms for every operation within the tag.
-
-- One Page per tag. All forms on tagpage.
-- Open first tag by default, or all endpoints if there's no tags.
-- Show other tags as tabs and at the bottom as a more decriptive menu.
 
 ## Custom OpenAPI Support
 
