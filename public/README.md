@@ -1,15 +1,18 @@
-[**OpenAPI for Humans**](https://github.com/CodeFromAnywhere/openapi-for-humans-next) combines multiple OpenAPIs in a fast, organized, and searchable interface.
+[**OpenAPI Explorer**](https://github.com/CodeFromAnywhere/openapi-explorer) combines multiple OpenAPIs in a fast, organized, and searchable interface.
 
 ## Goals
 
-- Make URL contain state and support navigating through multiple statically generated OpenAPIs as well as custom ones.
-- A friendly UI to use multiple products defined by OpenAPIs without looking to technical.
-- Ability to use crawl agents that can build action-paths based on the openapis and a query.
-- Ability to use this repo as a template so people can deploy a frontend for their own openapi with customised settings, and easily extend it in any way.
-- Full support of JSON-based OpenAPI convention (as much as possible)
-- Ultimate goal: The UPI (Universal Programming Interface) ([more info](upi.md))
+Ultimate goal: The UPI (Universal Programming Interface) ([more info](upi.md))
 
 ![](upi.drawio.png)
+
+Requirements:
+
+- Make URL contain state and support navigating through multiple statically generated OpenAPIs as well as custom ones.
+- A friendly UI to use multiple products defined by OpenAPIs without looking to technical.
+- Ability to leverage LLMs that can build action-paths based on the openapis and a query.
+- Ability to use this repo as a template so people can deploy a frontend for their own openapi with customised settings, and easily extend it in any way.
+- Full support of JSON-based OpenAPI convention (as much as possible)
 
 ## Non-goals
 
