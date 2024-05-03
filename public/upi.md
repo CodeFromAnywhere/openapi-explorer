@@ -7,7 +7,7 @@ The Universal Programming Interface aims to solve the problem of:
 - optimise for scale, reliability, safety, and cost
 - integrate with existing openapi's and jsonschema's where possible, generating new ones otherwise
 
-# Proposes implementation
+# Proposed implementation
 
 - The first step would be to select the right openapis for which subtasks (or main task).
   - If we don't have apis for all required subtasks, use human
