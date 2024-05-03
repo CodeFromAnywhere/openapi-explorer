@@ -14,6 +14,41 @@ export const OpenapiOverviewPage = (props: {
 
   const [search, setSearch] = useState("");
 
+  const tags = openapiDetails.document.tags?.length
+    ? openapiDetails.document.tags
+    : openapiDetails.operations
+        .map((item) => item.operation.tags)
+        .filter(notEmpty)
+        .flat()
+        .filter(onlyUnique2())
+        .map((name) => ({ name } as OpenAPIV3.TagObject));
+
+  const llmString = tags
+    .concat({ name: "__undefined", description: "No tags present" })
+    .map((tag) => {
+      const description = tag.description
+        ? `: ${tag.description}`
+        : tag.externalDocs
+        ? `: ${tag.externalDocs.url}`
+        : "";
+
+      const filtered = openapiDetails.operations.filter((x) =>
+        tag.name === "__undefined"
+          ? !x.operation.tags?.length
+          : x.operation.tags?.includes(tag.name),
+      );
+
+      return filtered.length === 0
+        ? null
+        : `${tag.name}${description}\n${filtered
+            .map((item) => {
+              return `- ${item.id} - ${item.operation.summary}`;
+            })
+            .join("\n")}`;
+    })
+    .filter(notEmpty)
+    .join("\n\n");
+
   const links = [
     {
       title: "Swagger",
@@ -32,25 +67,22 @@ export const OpenapiOverviewPage = (props: {
       url: `https://elements-demo.stoplight.io/?spec=${openapiDetails.openapiUrl}`,
     },
 
-    {
-      title: "ActionSchema Combination Proxy",
-      url: `https://proxy.actionschema.com/?url=${openapiDetails.openapiUrl}`,
-    },
+    // {
+    //   title: "ActionSchema Combination Proxy",
+    //   url: `https://proxy.actionschema.com/?url=${openapiDetails.openapiUrl}`,
+    // },
 
     {
       title: "Source",
       url: openapiDetails.openapiUrl,
     },
-  ];
 
-  const tags = openapiDetails.document.tags?.length
-    ? openapiDetails.document.tags
-    : openapiDetails.operations
-        .map((item) => item.operation.tags)
-        .filter(notEmpty)
-        .flat()
-        .filter(onlyUnique2())
-        .map((name) => ({ name } as OpenAPIV3.TagObject));
+    {
+      title: "Chat",
+      url: `https://groq.com`,
+      clipboardText: `This is the api for ${openapiDetails.openapiId}.\n\n${llmString}\n\nPlease help me find the right combination of actions to use for my goal.\n\nMy goal:`,
+    },
+  ];
 
   return (
     <div className="p-20">
@@ -62,6 +94,13 @@ export const OpenapiOverviewPage = (props: {
             <a
               className="pr-6 text-blue-500 hover:text-blue-600"
               href={link.url}
+              onClick={
+                link.clipboardText
+                  ? () => {
+                      navigator.clipboard.writeText(link.clipboardText);
+                    }
+                  : undefined
+              }
               key={link.url}
             >
               {link.title}
