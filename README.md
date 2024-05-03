@@ -1,1 +1,1 @@
-![See public/README.md](public/README.md)
+[See public/README.md](public/README.md)
