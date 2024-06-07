@@ -3,7 +3,11 @@
 import { notEmpty, onlyUnique2 } from "from-anywhere";
 import revalidateOpenapi from "./revalidateOpenapi";
 import { OpenAPIV3 } from "openapi-types";
-import { MatchingText, OpenapiDetails } from "openapi-for-humans-react";
+import {
+  MatchingText,
+  OpenapiDetails,
+  OpenapiForms,
+} from "openapi-for-humans-react";
 import { useState } from "react";
 import Markdown from "react-markdown";
 
@@ -14,14 +18,7 @@ export const OpenapiOverviewPage = (props: {
 
   const [search, setSearch] = useState("");
 
-  const tags = openapiDetails.document.tags?.length
-    ? openapiDetails.document.tags
-    : openapiDetails.operations
-        .map((item) => item.operation.tags)
-        .filter(notEmpty)
-        .flat()
-        .filter(onlyUnique2())
-        .map((name) => ({ name } as OpenAPIV3.TagObject));
+  const { tags } = openapiDetails;
 
   const llmString = tags
     .concat({ name: "__undefined", description: "No tags present" })
@@ -125,7 +122,9 @@ export const OpenapiOverviewPage = (props: {
       />
 
       <div>
-        <ul>
+        <OpenapiForms url={openapiDetails.openapiUrl} />
+
+        {/* <ul>
           {tags
             .concat({ name: "__undefined", description: "No tags present" })
             .map((tag) => {
@@ -188,7 +187,7 @@ export const OpenapiOverviewPage = (props: {
                 </li>
               );
             })}
-        </ul>
+        </ul> */}
       </div>
 
       <div className="my-10">

@@ -12,8 +12,8 @@
     "from-anywhere": "^0.0.29",
     "js-yaml": "^4.1.0",
     "next": "14.2.1",
-    "openapi-for-humans-react": "^0.0.37",
-    "openapi-util": "^0.0.23",
+    "openapi-for-humans-react": "^0.0.41",
+    "openapi-util": "^0.0.48",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1"

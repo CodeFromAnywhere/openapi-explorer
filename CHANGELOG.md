@@ -209,50 +209,41 @@ TODO:
 - ✅ Try to create a string from an openapi that parses the apis into tags, endpoints, and summaries
 - ✅ Create a button to go to groq with the above text + intro copied to clipboard
 
-## UI
+## Simplify debugging
 
-- 🟠 Form submission should create a loading state
-- Form response should set JSON state and render that on top
-- Form should be above description (As it can be very long)
-- Darkmode should render the rjsforms nicely
+❌ I need to be able to easily use all my endpoints from a swagger but with localhost. How? https://github.com/jellydn/next-swagger-doc maybe?
+
+✅ Look at how `explorer.actionschema.com` was made again.
+
+✅ Create a component in `react-openapi-form` (or so) that shows expandable forms for each endpoint.
+
+Ensure prefilling and styling is optimal.
+
+- ✅ 1 prop to provide all styling
+- ✅ store previous runs into localStorage
+- ✅ show req/res headers/body in JSON fields
+- remember which form is open/closed
+
+✅ Apply new component in `explorer`
+
+✅ Use this component in `crud-openapi`
+
+❌ Host `explorer` on http as well and test and confirm it can handle localhost:3000 openapis as well. **This isn't possible because vercel doesn't support http**
+
+✅ With this, confirm that the 'people' API works.
+
+Darkmode should render the rjsforms nicely (or no darkmode)
+
+Add ability for a `cors-proxy` like in `actionschema-web` to make the form able to be posted to any server regardless of browser-origin-policy-security.
+
+Add `openapi url` input and ensure it redirects to https or http depending on the url.
+
+Button to easily switch between prod and localhost.
 
 ## Further improvements
 
-- Use `cors-proxy` like in `actionschema-web` to make the form able to be posted to any server regardless of browser-origin-policy-security.
 - For Klippa it still "no schema" warning
 - Cloudflare is gateway timeout (see logging, likely too slow or big)
 - For GET endpoints we can probably instantly call the endpoint if there are no required non-defaulted variables with a form to edit stuff.
 
 <!-- 🎉🎉🎉🎉 At this point, let's continue with OpenCRUD -->
-
-## Custom URL direct
-
-Ability to fill in a URL as path which should direclty be read in realtime, and forms shown for it.
-
-Add ability to fil this path via an input "Custom OpenAPI"
-
-<!-- The below will further improve UX.... -->
-
-## Localstorage
-
-Create a localStorage in the explorer that remembers input fields so it's super easy to test endpoints quickly...
-
-- security per openapi/server
-- headers per openapi/server + variable name
-- inputsField content per operationId
-
-## Custom OpenAPI Support
-
-<!-- This is a choice where it could've gone in another direction: Maybe backend storage > local storage. Yet, we'll always want to be able to have users to mark favorites and maybe recents-->
-
-`AddCustomApi` client component.
-
-This form should simply check if it's found and if it's correct.
-
-If it is, it should navigate to `/{urlEncoded(url)}`
-
-If possible, we can also add this one to `localStorage` from here so it will stay in the menu for a user, but it's not statically generated.
-
-Depending on how easy it's to use `localStorage` maybe a better solution is to create an ID/URL pair in `localStorage` and navigate to the ID.
-
-Also, we need to track which valid openapis people fill in. We can collect that in some analytics provider. This will allow us to become a provider that collects the data, and once in a while we will re-generate the site with all new useful openapis so google can index it too.
